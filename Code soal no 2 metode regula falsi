@@ -1,0 +1,28 @@
+def f(x):
+    return x**3 - x - 1
+
+def regula_falsi(a, b, tol=1e-6, max_iter=100):
+    iterasi = 0
+    while abs(f(b)) > tol and iterasi < max_iter:
+        c = (a * f(b) - b * f(a)) / (f(b) - f(a))
+
+        # Print the current iteration's solution
+        print(f"Iterasi {iterasi + 1}: x = {c}")
+
+        if f(c) * f(a) < 0:
+            b = c
+        else:
+            a = c
+        
+        iterasi += 1
+    
+    return c
+
+# Tentukan interval awal
+a = -2
+b = 2
+
+# Panggil fungsi regula_falsi
+akar = regula_falsi(a, b)
+
+print("\nNilai x yang memenuhi persamaan:", akar)
