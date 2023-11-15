@@ -1,0 +1,40 @@
+import numpy as np
+
+def elimination_gauss(coefficients, constants):
+    n = len(constants)
+    
+    # Combine coefficients and constants into an augmented matrix
+    augmented_matrix = np.column_stack((coefficients, constants))
+
+    # Gaussian elimination
+    for i in range(n):
+        # Make the diagonal element 1
+        augmented_matrix[i] = augmented_matrix[i] / augmented_matrix[i, i]
+
+        # Eliminate non-zero entries below the current pivot
+        for j in range(i + 1, n):
+            factor = augmented_matrix[j, i]
+            augmented_matrix[j] -= factor * augmented_matrix[i]
+
+        # Print the current iteration's solution
+        print(f"Iterasi {i + 1}: x = {augmented_matrix[:, -1]}")
+
+    # Back substitution
+    for i in range(n - 1, 0, -1):
+        for j in range(i - 1, -1, -1):
+            factor = augmented_matrix[j, i]
+            augmented_matrix[j] -= factor * augmented_matrix[i]
+
+    # Extract the solution
+    solution = augmented_matrix[:, -1]
+    
+    return solution
+
+# Persamaan linier: 2x - 4 = 8
+coefficients = np.array([[2]])
+constants = np.array([8])
+
+# Panggil fungsi elimination_gauss
+solution = elimination_gauss(coefficients, constants)
+
+print("\nNilai x yang memenuhi persamaan:", solution[0])
